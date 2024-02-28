@@ -1,12 +1,10 @@
 from rest_framework.decorators import api_view
 from rest_framework import generics
 from rest_framework.response import Response
-from rest_framework import status
 from .models import Capsule
 from .serializers import CapsuleSerializer
 from sponsor.serializers import SponsorSerializer
 from sponsor.models import Sponsor
-from .pagination import CustomPageNumberPagination
 
     
 @api_view(['GET'])
