@@ -123,6 +123,8 @@ DATABASES = {
         'PORT': '3306',           # Leave empty to use the default MySQL port
     }
 }
+
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 

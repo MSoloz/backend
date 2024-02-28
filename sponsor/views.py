@@ -1,3 +1,12 @@
-from django.shortcuts import render
+from rest_framework import generics
+from .models import Sponsor
+from .serializers import SponsorSerializer
 
-# Create your views here.
+class SponsorListCreateView(generics.ListCreateAPIView):
+    queryset = Sponsor.objects.all()
+    serializer_class = SponsorSerializer
+
+class SponsorDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Sponsor.objects.all()
+    serializer_class = SponsorSerializer
+

@@ -6,3 +6,6 @@ class CapsuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Capsule
         fields = '__all__'
+        extra_kwargs = {
+            'sponsors': {'required': False}
+        }

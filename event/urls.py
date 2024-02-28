@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import add_event, events_by_channel, update_event, delete_event
+from .views import events_by_channel
+from .views import EventListCreateView,EventDetailView,EventSponsorsView
 
 urlpatterns = [
-    path('add-event/', add_event, name='add-event'),
     path('all/<int:channel_id>/', events_by_channel, name='events-by-channel'),
-    path('update-event/<int:event_id>/', update_event, name='update-event'),
-    path('delete-event/<int:event_id>/', delete_event, name='delete-event'),
+    path('<int:pk>/', EventDetailView.as_view(),name='event_list_create'),
+    path('', EventListCreateView.as_view(),name='event_detail'),
+    path('<int:pk>/sponsors/', EventSponsorsView.as_view(), name='event-sponsors'),
 ]

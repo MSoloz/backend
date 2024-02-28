@@ -9,7 +9,7 @@ class Capsule(models.Model):
     video_path = models.FileField(upload_to='videos/')
     channel = models.ForeignKey(to ='channel.Channel', on_delete=models.CASCADE)
     rubric = models.ForeignKey(to ='rubric.Rubric', on_delete=models.CASCADE)
-    sponsors = models.ManyToManyField(to='sponsor.Sponsor', related_name='capsule_sponsors')
+    sponsors = models.ManyToManyField(to='sponsor.Sponsor', related_name='capsule_sponsors',blank=True)
     created_at = models.DateTimeField(auto_now_add=True) 
     updated_at = models.DateTimeField(auto_now=True)
 

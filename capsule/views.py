@@ -1,18 +1,13 @@
 from rest_framework.decorators import api_view
+from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Capsule
 from .serializers import CapsuleSerializer
+from sponsor.serializers import SponsorSerializer
+from sponsor.models import Sponsor
+from .pagination import CustomPageNumberPagination
 
-
-@api_view(['POST'])
-def create_capsule(request):
-    serializer = CapsuleSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    else:
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 @api_view(['GET'])
 def get_capsules_by_channel_and_rubric(request, channel_id, rubric_id):
@@ -23,33 +18,19 @@ def get_capsules_by_channel_and_rubric(request, channel_id, rubric_id):
     except Capsule.DoesNotExist:
         return Response(status=404)
     
-@api_view(['DELETE'])
-def delete_capsule(request, capsule_id):
-    try:
-        capsule = Capsule.objects.get(id=capsule_id)
-        capsule.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-    except Capsule.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+   
+class CapsuleListCreateView(generics.ListCreateAPIView):
+    queryset = Capsule.objects.all()
+    serializer_class = CapsuleSerializer
 
-@api_view(['PUT'])
-def update_capsule(request, capsule_id):
-    try:
-        capsule = Capsule.objects.get(id=capsule_id)
-    except Capsule.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+class CapsuleDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Capsule.objects.all()
+    serializer_class = CapsuleSerializer  
 
-    serializer = CapsuleSerializer(capsule, data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class CapsuleSponsorsView(generics.ListAPIView):
+    serializer_class = SponsorSerializer
 
-@api_view(['GET'])
-def get_video_by_id(request, video_id):
-    try:
-        video = Capsule.objects.get(id=video_id)
-        serializer = CapsuleSerializer(video)
-        return Response(serializer.data)
-    except Capsule.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+    def get_queryset(self):
+        capsule_id = self.kwargs['pk']
+        return Sponsor.objects.filter(id=capsule_id)
+
