@@ -116,7 +116,7 @@ DATABASES = {
 
    'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'myvioo_db',
+        'NAME': 'myvioo_db2',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',  # Change this to your MySQL host if different

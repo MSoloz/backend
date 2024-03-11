@@ -4,7 +4,7 @@ from django.db import models
 class Capsule(models.Model):
 
     title = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
+    description = models.TextField()
     image_path = models.ImageField(upload_to='images/')
     video_path = models.FileField(upload_to='videos/')
     channel = models.ForeignKey(to ='channel.Channel', on_delete=models.CASCADE)

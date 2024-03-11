@@ -41,3 +41,8 @@ def update_channel(request, pk):
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET'])
+def get_channels_by_user(request, user_id):
+    channels = Channel.objects.filter(user_id=user_id)
+    serializer = ChannelSerializer(channels, many=True)
+    return Response(serializer.data)

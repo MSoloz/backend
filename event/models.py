@@ -3,10 +3,10 @@ from django.db import models
 
 class Event(models.Model):
 
-    text = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
     image_path = models.ImageField(upload_to='images/')
-    video_path = models.FileField(upload_to='videos/')
+    video_path = models.FileField(upload_to='videos/',blank=True)
     channel = models.ForeignKey(to ='channel.Channel', on_delete=models.CASCADE)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
